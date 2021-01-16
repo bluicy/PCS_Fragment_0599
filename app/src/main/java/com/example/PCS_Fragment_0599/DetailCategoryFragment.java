@@ -1,46 +1,53 @@
-package com.example.fragment;
+package com.example.PCS_Fragment_0599;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentHome#newInstance} factory method to
+ * Use the {@link DetailCategoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentHome extends Fragment implements View.OnClickListener{
+public class DetailCategoryFragment extends Fragment {
+
+    TextView tvCategoryName;
+    TextView tvCategoryDescription;
+
+    public static String EXTRA_NAME = "extra_name";
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button btnCategory = view.findViewById(R.id.btn_category);
-        btnCategory.setOnClickListener(this);
-    }
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.btn_category) {
-            CategoryFragment mCategoryFragment = new CategoryFragment();
-            FragmentManager mFragmentManager = getFragmentManager();
-            if (mFragmentManager != null) {
-                mFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.frame_container, mCategoryFragment, CategoryFragment.class.getSimpleName())
-                        .addToBackStack(null)
-                        .commit();
-            }
-        }
+        tvCategoryName = view.findViewById(R.id.tv_category_name);
+        tvCategoryDescription = view.findViewById(R.id.tv_category_description);
     }
 
-                // TODO: Rename parameter arguments, choose names that match
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        String categoryName = getArguments().getString(EXTRA_NAME);
+        tvCategoryName.setText(categoryName);
+        tvCategoryDescription.setText(getDescription());
+    }
+
+    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -49,7 +56,7 @@ public class FragmentHome extends Fragment implements View.OnClickListener{
     private String mParam1;
     private String mParam2;
 
-    public FragmentHome() {
+    public DetailCategoryFragment() {
         // Required empty public constructor
     }
 
@@ -59,11 +66,11 @@ public class FragmentHome extends Fragment implements View.OnClickListener{
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentHome.
+     * @return A new instance of fragment DetailCategoryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentHome newInstance(String param1, String param2) {
-        FragmentHome fragment = new FragmentHome();
+    public static DetailCategoryFragment newInstance(String param1, String param2) {
+        DetailCategoryFragment fragment = new DetailCategoryFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -84,6 +91,6 @@ public class FragmentHome extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_detail_category, container, false);
     }
 }
